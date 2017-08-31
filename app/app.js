@@ -33,7 +33,7 @@ app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOp
 });
 
 
-app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies)
+app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window)
 {
     $rootScope.isUserLoggedIn = false;
 	  $scope.login = function(user)
@@ -46,7 +46,8 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
                 //store.set('token', res.data.token);
                 //Cookie
                 $cookies.put('sostos.tkn', res.data.token);
-                $location.url(CONFIG.SOSTOSURL);
+                $window.location.href = CONFIG.SOSTOSURL;
+                //$location.url(CONFIG.SOSTOSURL);
             }
             else
             {
