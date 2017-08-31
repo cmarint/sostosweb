@@ -51,7 +51,8 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
             }
             else
             {
-                $scope.error = '<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> Usuario o Contraseña Inválidos.</div>';
+                $window.alert('Error usuario o contraseña');
+                //$scope.error = '<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> Usuario o Contraseña Inválidos.</div>';
             }
         });
     }
