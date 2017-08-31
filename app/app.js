@@ -1,4 +1,4 @@
-var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 'angular-storage','ngTouch','ngCookies']);
+var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 'angular-storage','ngCookies']);
 
 app.constant('CONFIG', {
     APISOSTOS: "http://168.232.165.85:8080/sostos_frontend_api",
