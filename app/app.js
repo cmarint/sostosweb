@@ -46,7 +46,7 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
                 //store.set('token', res.data.token);
                 //Cookie
                 $cookies.put('sostos.tkn', res.data.token);
-                $location.path(CONFIG.SOSTOSURL);
+                $location.url(CONFIG.SOSTOSURL);
             }
             else
             {
