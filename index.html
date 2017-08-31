@@ -66,18 +66,18 @@
                   <div class="form-group">
                     <div class="col-md-12">
                       <input class="form-control" placeholder="Ingrese correo electrónico" data-val-email="Correo no válido" data-val-required="El correo es requerido" id="username" name="username" type="text">
-                      <span class="field-validation-valid text-danger" data-valmsg-for="username" data-valmsg-replace="true"></span>
+                      <span class="field-validation-valid text-danger" data-valmsg-for="username" data-valmsg-replace="true" ng-model="user.username"></span>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-md-12">
-                      <input class="form-control" placeholder="Ingrese contraseña" data-val="true" data-val-required="La contraseña es requerida" id="password" name="Password" type="password">
+                      <input class="form-control" placeholder="Ingrese contraseña" data-val="true" data-val-required="La contraseña es requerida" id="password" name="Password" type="password" ng-model="user.password">
                       <span class="field-validation-valid text-danger" data-valmsg-for="password" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-md-12">
-                      <input type="submit" value="Iniciar sesión" class="btn col-md-12" onclick="location.href=/sostos/">
+                      <input type="submit" value="Iniciar sesión" class="btn col-md-12" ng-click="login(user)">
                     </div>
                   </div>
                   <div class="">
