@@ -5,6 +5,13 @@ app.constant('CONFIG', {
     SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
 })
 
+app.run(['$rootScope','jwtHelper', 'store', '$location','$routeParams','$cookies', function($rootScope, jwtHelper, store, $location,$routeParams,$cookies) {
+
+   $rootScope.isUserLoggedIn = false ; //Cambiar a false
+   $cookies.remove('sostos.tkn');
+   store.remove('token');
+
+}]);
 
 app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOptionsProvider) {
 
