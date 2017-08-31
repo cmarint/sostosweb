@@ -43,7 +43,7 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
             if(res.data && res.data.token != '')
             {
                 $rootScope.isUserLoggedIn = true;
-                store.set('token', res.data.token);
+                //store.set('token', res.data.token);
                 //Cookie
                 $cookies.put('sostos.tkn', res.data.token);
                 $location.path(CONFIG.SOSTOSURL);
