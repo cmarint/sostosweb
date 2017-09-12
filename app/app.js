@@ -2,7 +2,8 @@ var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 
 
 app.constant('CONFIG', {
     APISOSTOS: "http://168.232.165.85:8080/sostos_frontend_api",
-    SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
+    //SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
+    SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
 })
 
 app.run(['$rootScope','jwtHelper', 'store', '$location','$routeParams','$cookies', function($rootScope, jwtHelper, store, $location,$routeParams,$cookies) {
@@ -42,7 +43,7 @@ app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOp
 
 app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window)
 {
-    $rootScope.isUserLoggedIn = false;
+     $rootScope.isUserLoggedIn = false;
 	  $scope.login = function(user)
     {
         authFactory.login(user).then(function(res)
