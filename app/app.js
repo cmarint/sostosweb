@@ -2,8 +2,8 @@ var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 
 
 app.constant('CONFIG', {
     APISOSTOS: "http://168.232.165.85:8080/sostos_frontend_api",
-    //SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
-    SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
+    SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
+    //SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
 })
 
 app.run(['$rootScope','jwtHelper', 'store', '$location','$routeParams','$cookies', function($rootScope, jwtHelper, store, $location,$routeParams,$cookies) {
