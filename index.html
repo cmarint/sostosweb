@@ -29,7 +29,7 @@
   <script type="text/javascript" src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
   <script type="text/javascript" src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
 </head>
-<body ng-app="appSostosWeb">
+<body ng-app="appSostosWeb" ng-controller="loginController">
 <!--Navegacion-->
   <nav class="navbar-fixed-top">
     <div class="container-fluid">
@@ -56,7 +56,7 @@
             </a>
           </li> 
         </ul>
-        <ul class="nav navbar-nav navbar-right" ng-controller="loginController">
+        <ul class="nav navbar-nav navbar-right">
           <li class="dropdown ">
             <a href="#" class="dropdown-toggle sesion" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               Acceder
@@ -375,7 +375,7 @@
                   <div class="row">
                       <label class="control-label col-md-4" for="rutProfesor">* Rut</label>
                       <div class="col-md-8">
-                        <input type="text" class="form-control" id="rutProfesor" placeholder="13.546.876-k">
+                        <input type="text" class="form-control" id="rutProfesor" placeholder="9999999-K" ng-model="usereg.rut">
                       </div>
                   </div>
                 </div>
@@ -383,32 +383,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="nomProfesor">* Nombre</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Nombre Apellido">
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group col-md-12">
-                  <div class="row">
-                    <label class="control-label col-md-4" for="regProfesor">* Región</label>
-                    <div class="col-md-8">
-                      <select class="col-md-12" id="regProfesor" name="regProfesor">
-                      <option>Seleccionar Región</option>
-                      <option>Arica y Parinacota</option>
-                      <option>Tarapacá</option>
-                      <option>Antofagasta</option>
-                      <option>Atacama</option>
-                      <option>Coquimbo</option>
-                      <option>Valparaíso</option>
-                      <option>Metropolitana de Santiago</option>
-                      <option>O'Higgins</option>
-                      <option>Maule</option>
-                      <option>Bío-Bío</option>
-                      <option>La Araucanía</option>
-                      <option>Los Ríos</option>
-                      <option>Los Lagos</option>
-                      <option>Aysén</option>
-                      <option>Magallanes</option>
-                      </select>
+                      <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Nombre Apellido" ng-model="usereg.nombre">
                     </div>
                   </div>
                 </div>
@@ -416,19 +391,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="comProfesor">* Comuna</label>
                     <div class="col-md-8">
-                      <select class="col-md-12" id="comProfesor" name="comProfesor">
-                        <option>Seleccionar Comuna</option>
-                        <option>Santiago</option>
-                        <option>Independencia</option> 
-                        <option>Conchalí</option>
-                        <option>Huechuraba</option>
-                        <option>Recoleta</option>
-                        <option>Providencia</option>
-                        <option>Vitacura</option>
-                        <option>Las Condes</option>
-                        <option>La Granja</option>
-                        <option>San Miguel</option>
-                      </select>
+                     <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Comuna" ng-model="usereg.comuna">
                     </div>
                   </div>
                 </div>
@@ -436,7 +399,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="mailProfesor">* Correo Electrónico</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" id="mailProfesor" name="mailProfesor" placeholder="mimail@mail.com">
+                      <input type="email" class="form-control" id="mailProfesor" name="mailProfesor" placeholder="mimail@mail.com" ng-model="usereg.email">
                     </div>
                   </div>
                 </div>
@@ -444,7 +407,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="telProfesor">* Teléfono</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" data-val-length="El Telefono debe ser al menos 9 números." data-val-length-max="30" data-val-length-min="9" id="telProfesor" name="telProfesor" placeholder="+56 9 5426 3281">
+                      <input type="number" class="form-control" data-val-length="El Telefono debe ser al menos 9 números." data-val-length-max="30" data-val-length-min="9" id="telProfesor" name="telProfesor" placeholder="56971112223" ng-model="usereg.telefono">
                     </div>
                   </div>
                 </div>
@@ -452,7 +415,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="newPass">* Contraseña</label>
                     <div class="col-md-8">
-                      <input type="password" class="form-control" id="newPass" name="newPass" placeholder="Ingrese Contraseña">
+                      <input type="password" class="form-control" id="newPass" name="newPass" placeholder="Ingrese Contraseña" ng-model="usereg.password">
                     </div>
                   </div>
                 </div>
@@ -460,14 +423,19 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="newPassConfirm">* Confirmar Contraseña</label>
                     <div class="col-md-8">
-                      <input type="password" class="form-control" id="newPassConfirm" name="newPassConfirm" placeholder="Repita Contraseña">
+                      <input type="password" class="form-control" id="newPassConfirm" name="newPassConfirm" placeholder="Repita Contraseña" ng-model="usereg.rePassword">
                     </div>
                   </div>
                 </div>
                 <div class="form-group col-md-12">
                   <div class="row">
-                    <div class="col-md-12">
-                      <input type="submit" class="btn" value="enviar">
+                    <div class="col-md-8">
+                        <div class="alert alert-danger">
+                            {{ msg }}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                      <input type="submit" class="btn" value="enviar" ng-click="registro(usereg)">
                     </div>
                   </div>
                 </div>

@@ -44,7 +44,7 @@ app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOp
 app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window)
 {
      $rootScope.isUserLoggedIn = false;
-	  $scope.login = function(user)
+     $scope.login = function(user)
     {
         authFactory.login(user).then(function(res)
         {
@@ -63,6 +63,17 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
                 //$scope.error = '<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> Usuario o Contraseña Inválidos.</div>';
             }
         });
+    }
+
+    $scope.registro = function(user)
+    {
+        $scope.code = 0;
+        authFactory.regUser(user).then(function(res)
+        {
+            $scope.code = res.data.detailsResponse.code;
+            $scope.msg = res.data.detailsResponse.message;
+
+        })
     }
 }])
 
@@ -89,7 +100,47 @@ app.factory("authFactory", ["$http", "$q", "CONFIG", function($http, $q, CONFIG)
                 deferred.reject(error);
             })
             return deferred.promise;
-		}
+		},
+        regUser: function(user)
+        {
+            var deferred;
+            deferred = $q.defer();
+            $http({
+                method: 'POST',
+                skipAuthorization: true,
+                url: CONFIG.APISOSTOS +'/usuario/regusuario',
+                data: user,
+                headers: {'Content-Type': 'application/json'}
+            })
+            .then(function(res)
+            {
+                deferred.resolve(res);
+            })
+            .then(function(error)
+            {
+                deferred.reject(error);
+            })
+            return deferred.promise;
+
+        }
 	}
 }]);
+
+app.directive('pwCheck', [function () {
+    return {
+      require: 'ngModel',
+      link: function (scope, elem, attrs, ctrl) {
+        var firstPassword = '#' + attrs.pwCheck;
+        $(elem).add(firstPassword).on('keyup', function () {
+          scope.$apply(function () {
+            var v = elem.val()===$(firstPassword).val();
+            ctrl.$setValidity('pwmatch', v);
+          });
+        });
+      }
+    }
+  }]);
+
+
+
 
