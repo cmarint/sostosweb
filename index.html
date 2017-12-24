@@ -15,8 +15,11 @@
   <!-- link libreria de jquery -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+
   <script type="text/javascript" src="assets/js/sostos.js"></script>
   <!-- CSS -->
+
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
   <link rel="stylesheet" type="text/css" href="assets/css/sostos.css">
   <link type='image/png' rel='shortcut icon' href='favicon.png'/>
@@ -25,6 +28,7 @@
   <script src="assets/js/angular-route.min.js"></script>
   <script src="assets/js/angular-sanitize.min.js"></script>
   <script src="assets/js/angular-cookies.min.js"></script>
+  <script src="assets/js/captcha.js"></script>
   <script src="app/app.js"></script>
   <script type="text/javascript" src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
   <script type="text/javascript" src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
@@ -65,6 +69,12 @@
             <ul class="dropdown-menu">
               <li>
                 <div class="form-horizontal"><input type="hidden">
+                  <div class="form-group">
+                    <div class="col-md-12">
+                        <captcha field1="{{field1}}" operator="{{operator}}" field2="{{field2}}"></captcha>
+                        <input class="form-control" ng-model="resultado" size="1" placeholder="Ingrese desafio captcha" required />
+                    </div>
+                  </div>
                   <div class="form-group">
                     <div class="col-md-12">
                       <input class="form-control" placeholder="Ingrese correo electrónico" data-val-email="Correo no válido" data-val-required="El correo es requerido" id="username" name="username" type="text" ng-model="user.username">
@@ -137,6 +147,7 @@
   </article>
 <!--Que es Sostos-->
     <section class="container enunciado" id="QueEs">
+
       <h1>¿Qué es Sostos?</h1>
       <p>Es una plataforma digital online que facilita la creación y corrección de evaluaciones para todos los niveles educacionales</p>
       <a data-toggle="modal" class="btn_c1" data-target="#md_registro">Registrarse</a>
@@ -491,6 +502,7 @@
     });
   </script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
 </body>
 </html>
 

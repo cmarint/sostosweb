@@ -1,9 +1,9 @@
-var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 'angular-storage','ngCookies']);
+var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 'angular-storage','ngCookies','udpCaptcha']);
 
 app.constant('CONFIG', {
     APISOSTOS: "http://168.232.165.85:8080/sostos_frontend_api",
-    SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
-    //SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
+    //SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
+    SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
 })
 
 app.run(['$rootScope','jwtHelper', 'store', '$location','$routeParams','$cookies', function($rootScope, jwtHelper, store, $location,$routeParams,$cookies) {
@@ -41,28 +41,36 @@ app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOp
 });
 
 
-app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window)
+app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window','$captcha', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window, $captcha)
 {
      $rootScope.isUserLoggedIn = false;
      $scope.login = function(user)
     {
-        authFactory.login(user).then(function(res)
-        {
-            if(res.data && res.data.token != '')
+         if($captcha.checkResult($scope.resultado) == true)
+		{
+		 	authFactory.login(user).then(function(res)
             {
-                $rootScope.isUserLoggedIn = true;
-                //store.set('token', res.data.token);
-                //Cookie
-                $cookies.put('sostos.tkn', res.data.token);
-                $window.location.href = CONFIG.SOSTOSURL;
-                //$location.url(CONFIG.SOSTOSURL);
-            }
-            else
-            {
-                $window.alert('Error usuario o contraseña');
-                //$scope.error = '<div class="alert alert-danger fade in"><a href="#" class="close" data-dismiss="alert">&times;</a><strong>Error!</strong> Usuario o Contraseña Inválidos.</div>';
-            }
-        });
+                if(res.data && res.data.token != '')
+                {
+                    $rootScope.isUserLoggedIn = true;
+                    //store.set('token', res.data.token);
+                    //Cookie
+                    $cookies.put('sostos.tkn', res.data.token);
+                    $window.location.href = CONFIG.SOSTOSURL;
+                    //$location.url(CONFIG.SOSTOSURL);
+                }
+                else
+                {
+                    $window.alert('Error usuario o contraseña');
+                }
+            });
+		}
+		//si falla la validacion
+		else
+		{
+		 	alert("Desafio Incorrecto, vuelva a intentar");
+		}
+
     }
 
     $scope.registro = function(user)
