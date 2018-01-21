@@ -1,4 +1,4 @@
-var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 'angular-storage','ngCookies','udpCaptcha']);
+var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 'angular-storage','ngCookies','udpCaptcha','ng-rut','ngPassword']);
 
 app.constant('CONFIG', {
     APISOSTOS: "http://168.232.165.85:8080/sostos_frontend_api",
@@ -44,6 +44,7 @@ app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOp
 app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window','$captcha', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window, $captcha)
 {
      $rootScope.isUserLoggedIn = false;
+     $scope.mensajerror = '';
      $scope.login = function(user)
     {
          if($captcha.checkResult($scope.resultado) == true)
@@ -61,8 +62,10 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
                 }
                 else
                 {
-                    $window.alert('Error usuario o contraseña');
+                    $scope.mensajerror = 'Error usuario o contraseña';
                 }
+            }).catch(function (error) {
+                $scope.mensajerror = 'Error servicio de acceso'
             });
 		}
 		//si falla la validacion
@@ -80,7 +83,6 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
         {
             $scope.code = res.data.detailsResponse.code;
             $scope.msg = res.data.detailsResponse.message;
-
         })
     }
 }])

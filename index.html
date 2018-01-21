@@ -30,6 +30,8 @@
   <script src="assets/js/angular-cookies.min.js"></script>
   <script src="assets/js/captcha.js"></script>
   <script src="app/app.js"></script>
+  <script src="assets/js/angular-rut.js"></script>
+  <script src="assets/js/angular-password.min.js"></script>
   <script type="text/javascript" src="bower_components/angular-jwt/dist/angular-jwt.js"></script>
   <script type="text/javascript" src="bower_components/a0-angular-storage/dist/angular-storage.js"></script>
 </head>
@@ -68,34 +70,42 @@
             </a>
             <ul class="dropdown-menu">
               <li>
+                <form name="frmOp">
                 <div class="form-horizontal"><input type="hidden">
                   <div class="form-group">
                     <div class="col-md-12">
                         <captcha field1="{{field1}}" operator="{{operator}}" field2="{{field2}}"></captcha>
-                        <input class="form-control" ng-model="resultado" size="1" placeholder="Ingrese desafio captcha" required />
+                        <input class="form-control" ng-model="resultado" size="1" placeholder="Ingrese desafio captcha" ng-required="true" />
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-md-12">
-                      <input class="form-control" placeholder="Ingrese correo electrónico" data-val-email="Correo no válido" data-val-required="El correo es requerido" id="username" name="username" type="text" ng-model="user.username">
+                      <input class="form-control" placeholder="Ingrese correo electrónico" id="username" name="username" type="text" ng-model="user.username"  ng-required="true">
                       <span class="field-validation-valid text-danger" data-valmsg-for="username" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-md-12">
-                      <input class="form-control" placeholder="Ingrese contraseña" data-val="true" data-val-required="La contraseña es requerida" id="password" name="Password" type="password" ng-model="user.password">
-                      <span class="field-validation-valid text-danger" data-valmsg-for="password" data-valmsg-replace="true"></span>
+                      <input class="form-control" placeholder="Ingrese contraseña" data-val="true" data-val-required="La contraseña es requerida" id="password" name="Password" type="password" ng-model="user.password"  ng-required="true">
                     </div>
                   </div>
                   <div class="form-group">
                     <div class="col-md-12">
-                      <input type="submit" value="Iniciar sesión" class="btn col-md-12" ng-click="login(user)">
+                      <span class="text-danger">
+                            {{ mensajerror }}</span>
                     </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-12">
+                      <input type="submit" value="Iniciar sesión" class="btn col-md-12" ng-click="login(user)"  ng-disabled="!frmOp.$valid">
+                    </div>
+
                   </div>
                   <div class="">
                     <a data-toggle="modal" id="pass_profesor" data-target="#md_contraseña" class="col-md-12 nota">¿Ha olvidado su contraseña?</a>
                   </div>
                 </div>
+                </form>
               </li>
             </ul>
           </li>
@@ -381,12 +391,16 @@
               </div>
             </div><!--Fin tab -->
             <div role="tabpanel" class="tab-pane" id="registro-tab">
+             <form name="frmOp1">
               <div class="form-horizontal" method="post" role="form">
                 <div class="form-group col-md-12">
                   <div class="row">
                       <label class="control-label col-md-4" for="rutProfesor">* Rut</label>
                       <div class="col-md-8">
-                        <input type="text" class="form-control" id="rutProfesor" placeholder="9999999-K" ng-model="usereg.rut">
+                        <div class="form-group has-feedback" ng-class="{'has-error':frmOp1.rutProfesor.$error.rutValido}">
+                          <input type="text" class="form-control" id="rutProfesor" placeholder="Ingrese rut sin puntos y con guion" ng-model="usereg.rut" ng-required="true" ng-rut name="rutProfesor">
+                            <span class="glyphicon   form-control-feedback" ng-class="{'glyphicon-ok':!frmOp1.rutProfesor.$error.rutValido,'glyphicon-remove':frmOp1.rutProfesor.$error.rutValido}"></span>
+                        </div>
                       </div>
                   </div>
                 </div>
@@ -394,7 +408,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="nomProfesor">* Nombre</label>
                     <div class="col-md-8">
-                      <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Nombre Apellido" ng-model="usereg.nombre">
+                      <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Nombre Apellido" ng-model="usereg.nombre" ng-required="true">
                     </div>
                   </div>
                 </div>
@@ -402,7 +416,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="comProfesor">* Comuna</label>
                     <div class="col-md-8">
-                     <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Comuna" ng-model="usereg.comuna">
+                     <input type="text" class="form-control" id="nomProfesor" name="nomProfesor" placeholder="Comuna" ng-model="usereg.comuna" ng-required="true">
                     </div>
                   </div>
                 </div>
@@ -410,7 +424,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="mailProfesor">* Correo Electrónico</label>
                     <div class="col-md-8">
-                      <input type="email" class="form-control" id="mailProfesor" name="mailProfesor" placeholder="mimail@mail.com" ng-model="usereg.email">
+                      <input type="email" class="form-control" id="mailProfesor" name="mailProfesor" placeholder="mimail@mail.com" ng-model="usereg.email" ng-required="true">
                     </div>
                   </div>
                 </div>
@@ -418,7 +432,7 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="telProfesor">* Teléfono</label>
                     <div class="col-md-8">
-                      <input type="number" class="form-control" data-val-length="El Telefono debe ser al menos 9 números." data-val-length-max="30" data-val-length-min="9" id="telProfesor" name="telProfesor" placeholder="56971112223" ng-model="usereg.telefono">
+                      <input type="number" class="form-control" data-val-length="El Telefono debe ser al menos 9 números." data-val-length-max="30" data-val-length-min="9" id="telProfesor" name="telProfesor" placeholder="56971112223" ng-model="usereg.telefono"  ng-required="true">
                     </div>
                   </div>
                 </div>
@@ -426,7 +440,9 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="newPass">* Contraseña</label>
                     <div class="col-md-8">
-                      <input type="password" class="form-control" id="newPass" name="newPass" placeholder="Ingrese Contraseña" ng-model="usereg.password">
+                      <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="Ingrese Contraseña" ng-model="usereg.password" ng-required="true" ng-pattern="/^(?=.*?[a-z])(?=.*?[0-9]).{2,10}$/">
+                      <span class="text-danger" ng-show="frmOp1.newPassword.$invalid">
+                            Debe contener letras y números!</span>
                     </div>
                   </div>
                 </div>
@@ -434,7 +450,26 @@
                   <div class="row">
                     <label class="control-label col-md-4" for="newPassConfirm">* Confirmar Contraseña</label>
                     <div class="col-md-8">
-                      <input type="password" class="form-control" id="newPassConfirm" name="newPassConfirm" placeholder="Repita Contraseña" ng-model="usereg.rePassword">
+                      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Repita Contraseña" ng-model="usereg.rePassword" ng-required="true"  match-password="newPassword">
+                      <span class="text-danger" ng-show="frmOp1.confirmPassword.$invalid&&!frmOp1.confirmPassword.$error.required">
+                            Las contraseñas no coinciden</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-12">
+                  <div class="row">
+                    <label class="control-label col-md-4" for="newPassConfirm">* Terminos Legales</label>
+                    <div class="col-md-8">
+                      <input type="checkbox" ng-required="true" ng-model="acepto">Acepto
+                      <textarea cols="30" rows="5" class="form-control" readonly>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vel orci eu ante congue hendrerit porttitor sed ante. Aliquam hendrerit dolor et neque luctus, sed pharetra dolor bibendum. Quisque viverra nibh eget nulla vehicula, ac interdum orci suscipit. Donec suscipit, lacus vel accumsan condimentum, sapien leo elementum tortor, vel gravida neque leo at ex. Sed sed erat nec quam auctor lacinia rutrum in mi. Nam a eleifend felis. Suspendisse sit amet enim ante. Nunc id tempus dolor.
+
+Aenean ac nisi dolor. Vivamus placerat diam enim, eget ultricies tortor iaculis et. Donec eu dolor laoreet, consectetur est vitae, gravida quam. Proin ultrices eros eget lectus efficitur condimentum. Integer non metus id odio blandit blandit. Aliquam dapibus iaculis placerat. Duis porttitor feugiat magna at feugiat. Maecenas maximus a quam non hendrerit. Nullam in turpis mi. Donec ac mi blandit, pellentesque leo at, efficitur metus. Etiam sapien sem, tempor eu odio vel, condimentum maximus massa. Donec ac volutpat tortor. Nulla rutrum semper vehicula. Etiam urna nisl, convallis eget purus a, aliquet tempor diam. Donec ac magna eget ligula bibendum vulputate. Nullam quis volutpat tortor, quis suscipit mi.
+
+Nulla malesuada quis ex ut ullamcorper. Nulla sit amet nulla eget lorem fringilla pretium eu eu enim. Integer ac augue non arcu molestie volutpat eu eu tellus. Proin blandit tincidunt quam. Morbi commodo neque nunc, nec malesuada lacus faucibus vitae. Aenean euismod lectus ac pretium ultrices. Maecenas fringilla diam sit amet diam hendrerit ullamcorper. Maecenas non tincidunt sem. Praesent et lacus ligula. Fusce vel augue lacinia, lobortis velit nec, tincidunt nibh.
+
+Phasellus viverra vehicula nisl, sed eleifend erat. Integer gravida lorem in arcu venenatis, sit amet cursus arcu pellentesque. Sed auctor, leo et tristique molestie, elit nisl aliquet nibh, consectetur tincidunt quam est sed massa. Sed ullamcorper et quam ut ornare. Maecenas lobortis, neque at iaculis luctus, nunc eros vehicula augue, sit amet efficitur augue urna id elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam lobortis, augue ut iaculis sagittis, enim justo vehicula lorem, eget consectetur ante mauris ut lectus. Donec nunc quam, mollis eu malesuada non, congue in nisi. Vivamus et neque id libero vulputate finibus eget sed odio.
+                      </textarea>
                     </div>
                   </div>
                 </div>
@@ -446,13 +481,14 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                      <input type="submit" class="btn" value="enviar" ng-click="registro(usereg)">
+                      <input type="submit" class="btn" value="enviar" ng-click="registro(usereg)" ng-disabled="!frmOp1.$valid || !acepto">
                     </div>
                   </div>
                 </div>
                 <div class="form-group">
                 </div>
               </div>
+             </form>
             </div><!--Fin tab -->
           </div>
         </div>
