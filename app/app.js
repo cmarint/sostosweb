@@ -2,8 +2,8 @@ var app = angular.module('appSostosWeb', ['ngRoute','ngSanitize','angular-jwt', 
 
 app.constant('CONFIG', {
     APISOSTOS: "http://168.232.165.85:8080/sostos_frontend_api",
-    SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
-    //SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
+    //SOSTOSURL: "http://168.232.165.85/sostosweb/sostos/#!/home"
+    SOSTOSURL: "http://localhost/sostosweb/sostos/#!/home"
 })
 
 app.run(['$rootScope','jwtHelper', 'store', '$location','$routeParams','$cookies', function($rootScope, jwtHelper, store, $location,$routeParams,$cookies) {
@@ -41,10 +41,11 @@ app.config(function($routeProvider, $httpProvider, jwtInterceptorProvider, jwtOp
 });
 
 
-app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window','$captcha', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window, $captcha)
+app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper', 'store', '$location','$rootScope', '$http', '$cookies','$window','$captcha', function($scope, CONFIG, authFactory, jwtHelper, store, $location,$rootScope, $http, $cookies, $window, $captcha, $cookiesProvider)
 {
      $rootScope.isUserLoggedIn = false;
      $scope.mensajerror = '';
+     $scope.pregseg = false;
      $scope.login = function(user)
     {
          if($captcha.checkResult($scope.resultado) == true)
@@ -65,7 +66,7 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
                     $scope.mensajerror = 'Error usuario o contraseña';
                 }
             }).catch(function (error) {
-                $scope.mensajerror = 'Error servicio de acceso'
+                $scope.mensajerror = 'Error servicio de acceso:' + error;
             });
 		}
 		//si falla la validacion
@@ -82,8 +83,18 @@ app.controller('loginController', ['$scope','CONFIG', 'authFactory', 'jwtHelper'
         authFactory.regUser(user).then(function(res)
         {
             $scope.code = res.data.detailsResponse.code;
-            $scope.msg = res.data.detailsResponse.message;
+            if ($scope.code == '00') {
+                $scope.msg = 'Sus datos fueron registrados correctamente. Para ingresar debe hacer click en el bot&oacute;n [Acceder]';
+            } else {
+                $scope.msg = res.data.detailsResponse.message;
+            }
+
         })
+    }
+
+    $scope.recuperaPass = function (obj) {
+        $scope.pregseg = true;
+        console.log(obj);
     }
 }])
 
